@@ -1,3 +1,4 @@
+It is a new line
 It is my homework
 It is second line of my homework
 It is third line of my homework
@@ -14,3 +15,4 @@ It is third line of my homework
 #*_override.tf.json - Игнорируются файлы override.tf, override.tf.json и все файлы, заканчивающиеся на _override.tf и _override.tf.json в корневой директории
 #.terraformrc
 #terraform.rc - Игнорируются файлы .terraformrc и terraform.rc
+this line is for practice
