@@ -16,3 +16,4 @@ It is third line of my homework
 #.terraformrc
 #terraform.rc - Игнорируются файлы .terraformrc и terraform.rc
 this line is for practice
+New fucking line
