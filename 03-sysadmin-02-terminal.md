@@ -45,6 +45,18 @@ ls: cannot access 'temp': No such file or directory
 6. Не получается:
 vagrant@vagrant:~$ ls -l root 2> /dev/tty1
 bash: /dev/tty1: Permission denied
+----------------------------------
+Правка 6го задания:
+vagrant@vagrant:~$ sudo ls -l /root 2> /dev/tty1
+-bash: /dev/tty1: Permission denied
+vagrant@vagrant:~$ ls -l /root 2> /dev/pts/1
+vagrant@vagrant:~$
+
+vagrant@vagrant:~$ tty
+/dev/pts/1
+vagrant@vagrant:~$ ls: cannot open directory '/root': Permission denied
+
+Ответ: Не получилось перенаправления на /dev/tty даже с sudo, но получилось на /dev/pts/1. Может у меня что то не правильно настроено
 
 7. vagrant@vagrant:~$ bash 5>&1
 vagrant@vagrant:~$ echo Netology > /proc/$$/fd/5
@@ -67,6 +79,16 @@ flags           : fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov 
 13. Не очень понял вопрос, установил reptyr, ввел команду, получилось так:
 vagrant@vagrant:~$ reptyr -l -s 3 702
 Opened a new pty: /dev/pts/3
+---------------------------------
+vagrant@vagrant:~$ tty
+/dev/pts/1
+vagrant@vagrant:~$ ps -a
+    PID TTY          TIME CMD
+   1575 pts/1    00:00:00 ps
+vagrant@vagrant:~$ sudo reptyr -T 1575
+[-] Unable to open /proc/1575/stat: No such file or directory
+Unable to attach to pid 1575: Operation not permitted
+Ответ: Я не знаю почему, но не получается, 1 на 0 в указанных файлах менял, ничего, прошу объяснить что мне нужно сделать, чтобы все заработало
 
 14. tee используется для разделения выводимых программой данных, таким образом данные могут быть использованы для вывод>(взято с википедии) Команда sudo tee будет иметь права на запись, так как запущена от рута
 
