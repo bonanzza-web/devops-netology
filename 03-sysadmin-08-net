@@ -1,0 +1,107 @@
+1. telnet route-views.routeviews.org
+Trying 128.223.51.103...
+Connected to route-views.routeviews.org.
+Escape character is '^]'.
+C
+**********************************************************************
+
+                    RouteViews BGP Route Viewer
+                    route-views.routeviews.org
+
+ route views data is archived on http://archive.routeviews.org
+
+ This hardware is part of a grant by the NSF.
+ Please contact help@routeviews.org if you have questions, or
+ if you wish to contribute your view.
+
+ This router has views of full routing tables from several ASes.
+ The list of peers is located at http://www.routeviews.org/peers
+ in route-views.oregon-ix.net.txt
+
+ NOTE: The hardware was upgraded in August 2014.  If you are seeing
+ the error message, "no default Kerberos realm", you may want to
+ in Mac OS X add "default unset autologin" to your ~/.telnetrc
+
+ To login, use the username "rviews".
+
+ **********************************************************************
+
+User Access Verification
+
+Username: rviews
+route-views>show ip route 37.1.42.56
+Routing entry for 37.1.32.0/19
+  Known via "bgp 6447", distance 20, metric 0
+  Tag 6939, type external
+  Last update from 64.71.137.241 2w6d ago
+  Routing Descriptor Blocks:
+  * 64.71.137.241, from 64.71.137.241, 2w6d ago
+      Route metric is 0, traffic share count is 1
+      AS Hops 3
+      Route tag 6939
+      MPLS label: none
+
+2. vagrant@vagrant:~$ sudo modprobe -v dummy numdummies=1
+insmod /lib/modules/5.4.0-110-generic/kernel/drivers/net/dummy.ko numdummies=0 numdummies=1
+vagrant@vagrant:~$ lsmod | grep dummy
+dummy                  16384  0
+vagrant@vagrant:~$ ifconfig -a
+dummy0: flags=130<BROADCAST,NOARP>  mtu 1500
+        ether 26:8d:53:c2:a3:56  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+eth0: flags=4163<UP,BROADCAST,RUNNING,MULTICAST>  mtu 1500
+        inet 10.0.2.15  netmask 255.255.255.0  broadcast 10.0.2.255
+        inet6 fe80::a00:27ff:fea2:6bfd  prefixlen 64  scopeid 0x20<link>
+        ether 08:00:27:a2:6b:fd  txqueuelen 1000  (Ethernet)
+        RX packets 162182  bytes 190486456 (190.4 MB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 57938  bytes 22885288 (22.8 MB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+lo: flags=73<UP,LOOPBACK,RUNNING>  mtu 65536
+        inet 127.0.0.1  netmask 255.0.0.0
+        inet6 ::1  prefixlen 128  scopeid 0x10<host>
+        loop  txqueuelen 1000  (Local Loopback)
+        RX packets 142  bytes 12695 (12.6 KB)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 142  bytes 12695 (12.6 KB)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vagrant@vagrant:~$ sudo ip addr add 10.0.2.20/24 dev dummy0
+vagrant@vagrant:~$ ifconfig dummy0
+dummy0: flags=130<BROADCAST,NOARP>  mtu 1500
+        inet 10.0.2.20  netmask 255.255.255.0  broadcast 0.0.0.0
+        ether 26:8d:53:c2:a3:56  txqueuelen 1000  (Ethernet)
+        RX packets 0  bytes 0 (0.0 B)
+        RX errors 0  dropped 0  overruns 0  frame 0
+        TX packets 0  bytes 0 (0.0 B)
+        TX errors 0  dropped 0 overruns 0  carrier 0  collisions 0
+
+vagrant@vagrant:~$ sudo ip route add 8.8.8.8 via 10.0.2.20
+vagrant@vagrant:~$ ip route
+default via 10.0.2.2 dev eth0 proto dhcp src 10.0.2.15 metric 100
+8.8.8.8 via 10.0.2.20 dev dummy0
+10.0.2.0/24 dev eth0 proto kernel scope link src 10.0.2.15
+10.0.2.0/24 dev dummy0 proto kernel scope link src 10.0.2.20
+10.0.2.2 dev eth0 proto dhcp scope link src 10.0.2.15 metric 100
+
+3. vagrant@vagrant:~$ sudo ss -t -l -n -p
+State     Recv-Q     Send-Q         Local Address:Port         Peer Address:Port    Process
+LISTEN    0          4096           127.0.0.53%lo:53                0.0.0.0:*        users:(("systemd-resolve",pid=662,fd=13))
+LISTEN    0          128                  0.0.0.0:22                0.0.0.0:*        users:(("sshd",pid=983,fd=3))
+LISTEN    0          128                     [::]:22                   [::]:*        users:(("sshd",pid=983,fd=4))
+
+systemd-resolve слушает 53 порт (DNS), sshd слушает 22 порт
+
+4. vagrant@vagrant:~$ sudo ss -u -l -n -p
+State     Recv-Q    Send-Q          Local Address:Port         Peer Address:Port    Process
+UNCONN    0         0               127.0.0.53%lo:53                0.0.0.0:*        users:(("systemd-resolve",pid=662,fd=12))
+UNCONN    0         0              10.0.2.15%eth0:68                0.0.0.0:*        users:(("systemd-network",pid=659,fd=19))
+
+systemd-resolve так же слушает 53 порт (DNS), systemd-network слушает 68 dhcp.
+
+5. Добавил скриншот
