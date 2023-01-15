@@ -1,0 +1,144 @@
+Задание 1
+
+Есть скрипт:
+
+#!/usr/bin/env python3
+a = 1
+b = '2'
+c = a + b
+
+Вопросы:
+Вопрос 	Ответ
+Какое значение будет присвоено переменной c? 	будет ошибка, т.к. нельзя сложить разные типы переменных (TypeError: unsupported operand type(s) for +: 'int' and 'str')
+Как получить для переменной c значение 12? 	c = str(a) + b
+Как получить для переменной c значение 3? 	c = a + int(b)
+Задание 2
+
+Мы устроились на работу в компанию, где раньше уже был DevOps Engineer. Он написал скрипт, позволяющий узнать, какие файлы модифицированы в репозитории, относительно локальных изменений. Этим скриптом недовольно начальство, потому что в его выводе есть не все изменённые файлы, а также непонятен полный путь к директории, где они находятся.
+
+Как можно доработать скрипт ниже, чтобы он исполнял требования вашего руководителя?
+
+#!/usr/bin/env python3
+
+import os
+
+bash_command = ["cd ~/netology/sysadm-homeworks", "git status"]
+result_os = os.popen(' && '.join(bash_command)).read()
+is_change = False
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '')
+        print(prepare_result)
+        break
+
+Ваш скрипт:
+
+#!/usr/bin/env python3
+
+import os
+
+bash_command = ["cd ~/devops-github-new/devops-netology", "git status"]
+result_os = os.popen(' && '.join(bash_command)).read()
+
+for result in result_os.split('\n'):
+    if result.find('modified') != -1:
+        prepare_result = result.replace('\tmodified:   ', '')
+        print(prepare_result)
+
+
+
+Вывод скрипта при запуске при тестировании:
+
+vagrant@vagrant:~/devops-github-new/devops-netology$ ./pyscript.py
+  pyscript.py
+
+
+Задание 3
+
+Доработать скрипт выше так, чтобы он не только мог проверять локальный репозиторий в текущей директории, но и умел воспринимать путь к репозиторию, который мы передаём как входной параметр. Мы точно знаем, что начальство коварное и будет проверять работу этого скрипта в директориях, которые не являются локальными репозиториями.
+Ваш скрипт:
+
+#!/usr/bin/env python3
+
+import os
+import sys
+#добавил аргумент для указания пути к каталогу
+cmdpath = sys.argv[1]
+
+#здесь добавил проверку на существование каталога, если не существует, то предлагается ввод нового пути до тех пор, пока не будет введен существующий каталог (намучался немного по неопытности:))
+while os.path.isdir(cmdpath) == False:
+	print("No such directory")
+	cmdpath = input("Please, enter the correct path: ")
+
+bash_cmd = ["cd " + cmdpath, "git status 2>/dev/null"]
+
+#здесь добавил проверку, репозиторий ди это или обычный каталог
+is_git = os.listdir(cmdpath)
+is_git = ';'.join(is_git)
+if '.git' not in is_git:
+	print('This directory isn\'t Git repository')
+
+result_os = os.popen(' && '.join(bash_cmd)).read()
+
+for result in result_os.split('\n'):
+	if result.find('modified') != -1:
+		prepare_result = result.replace('\tmodified:    ', '')
+		print(prepare_result)
+#тут добавил вывод untracked файлов, понабивал руку
+for i in range(len(result_os.split('\n'))):
+	if result_os.split('\n')[i] == 'Untracked files:':
+		print("\tThe new file: ",result_os.split('\n')[i+2])
+
+Вывод скрипта при запуске при тестировании:
+
+vagrant@vagrant:~/devops-github-new/devops-netology$ ./git.py ~/devops-github-new/devops-netology/
+        modified:   pyscript.py
+        The new file:   git.py
+
+
+Задание 4
+
+Наша команда разрабатывает несколько веб-сервисов, доступных по http. Мы точно знаем, что на их стенде нет никакой балансировки, кластеризации, за DNS прячется конкретный IP сервера, где установлен сервис.
+
+Проблема в том, что отдел, занимающийся нашей инфраструктурой очень часто меняет нам сервера, поэтому IP меняются примерно раз в неделю, при этом сервисы сохраняют за собой DNS имена. Это бы совсем никого не беспокоило, если бы несколько раз сервера не уезжали в такой сегмент сети нашей компании, который недоступен для разработчиков.
+
+Мы хотим написать скрипт, который:
+
+    опрашивает веб-сервисы,
+    получает их IP,
+    выводит информацию в стандартный вывод в виде: <URL сервиса> - <его IP>.
+
+Также, должна быть реализована возможность проверки текущего IP сервиса c его IP из предыдущей проверки. Если проверка будет провалена - оповестить об этом в стандартный вывод сообщением: [ERROR] <URL сервиса> IP mismatch: <старый IP> <Новый IP>. Будем считать, что наша разработка реализовала сервисы: drive.google.com, mail.google.com, google.com.
+Ваш скрипт:
+
+from socket import gethostbyname
+import time
+
+services = {
+    'drive.google.com': '0.0.0.0',
+    'mail.google.com': '0.0.0.0',
+    'google.com': '74.125.131.100',
+    '8.8.8.8': '8.8.8.8' #для тестирования добавил доступный сервис
+}
+#сделал с исключением ошибки, видел такое решение на ютубе и решил добавить
+try:
+    while True:
+        for key, value in services.items():
+            if gethostbyname(key) == value:
+                print("Сервис доступен по адресу ", gethostbyname(key))
+            else:
+                print(f'ОШИБКА, сервис {key} не доступен по адресу {value}, новый адрес сервиса {gethostbyname(key)}')
+        time.sleep(3)
+except KeyboardInterrupt:
+    print("Выход из программы")
+
+Вывод скрипта при запуске при тестировании:
+#формат вывода отличается от предыдущих заданий, т.к. делал на винде в pycharm, потому что на домашнем ноуте линукс только консольный на виртуалках, в nano страшно неудобно, предыдущие задания делал именно там:))
+C:\Users\bonanzza\AppData\Local\Programs\Python\Python38-32\python.exe C:\Users\bonanzza\PycharmProjects\pythonLearn\services.py 
+ОШИБКА, сервис drive.google.com не доступен по адресу 0.0.0.0, новый адрес сервиса 64.233.162.194
+ОШИБКА, сервис mail.google.com не доступен по адресу 0.0.0.0, новый адрес сервиса 142.250.179.101
+ОШИБКА, сервис google.com не доступен по адресу 74.125.131.100, новый адрес сервиса 74.125.131.113
+Сервис доступен по адресу  8.8.8.8
+Выход из программы
+
+Process finished with exit code 0
