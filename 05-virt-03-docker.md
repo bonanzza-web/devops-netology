@@ -35,14 +35,14 @@ docker run -d --name devopsnginx -p 7777:80 bonanzza/devopsnginx
 
 
 Задача 3.
-#Создаю контейнер с centos:
+#Создаю контейнер с centos:  
 root@debian-docker:~# docker run -it --name cent -v $HOME/data:$HOME/data centos
 [root@2fb00dd9b8a3 /]# ls
 bin  etc   lib    lost+found  mnt  proc  run   srv  tmp  var
 dev  home  lib64  media       opt  root  sbin  sys  usr
 
 
-#Создаю контейнер с debian:
+#Создаю контейнер с debian:  
 root@debian-docker:~# docker run -it --name deb -v $HOME/data:$HOME/data debian
 root@69300055a4dc:/# cd ~
 root@69300055a4dc:~# ls
