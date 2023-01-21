@@ -49,21 +49,21 @@ root@69300055a4dc:~# ls
 data
 
 
-#Создаю файл в папке data на centos:
+#Создаю файл в папке data на centos: 
 [root@2fb00dd9b8a3 data]# echo "Hello Netology" > testfile
 [root@2fb00dd9b8a3 data]# ls
 testfile
 
 
-#Создаю файл в папке data на хостовой машине:
-root@debian-docker:~/data# echo "Hello world" > testfile.host
-root@debian-docker:~/data# ls
-testfile  testfile.host
+#Создаю файл в папке data на хостовой машине: 
+root@debian-docker:~/data# echo "Hello world" > testfile.host  
+root@debian-docker:~/data# ls  
+testfile  testfile.host  
 
-#Проверяю листинг в контейнере debian:
-root@69300055a4dc:~# ls -l data
-total 8
--rw-r--r-- 1 root root 15 Jan 21 16:00 testfile
--rw-r--r-- 1 root root 12 Jan 21 16:02 testfile.host
+#Проверяю листинг в контейнере debian:  
+root@69300055a4dc:~# ls -l data  
+total 8  
+-rw-r--r-- 1 root root 15 Jan 21 16:00 testfile  
+-rw-r--r-- 1 root root 12 Jan 21 16:02 testfile.host  
 
 Вывод: папки синхронизируются
