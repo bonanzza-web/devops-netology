@@ -28,7 +28,8 @@
 
 Ответ:    
     
-```root@debian-docker:~/terraformdz/ter-homeworks/01/src# ls
+```
+root@debian-docker:~/terraformdz/ter-homeworks/01/src# ls
 main.tf  terraform  terraformrc
 root@debian-docker:~/terraformdz/ter-homeworks/01/src# ./terraform init
 
