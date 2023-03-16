@@ -70,7 +70,8 @@ should now work.
 
 If you ever set or change modules or backend configuration for Terraform,
 rerun this command to reinitialize your working directory. If you forget, other
-commands will detect it and remind you to do so if necessary.```    
+commands will detect it and remind you to do so if necessary.
+```    
 
 2. Изучите файл **.gitignore**. В каком terraform файле допустимо сохранить личную, секретную информацию?
 3. Выполните код проекта. Найдите  в State-файле секретное содержимое созданного ресурса **random_password**. Пришлите его в качестве ответа.
