@@ -20,6 +20,8 @@
 https://console.cloud.yandex.ru/folders/<ваш cloud_id>/vpc/security-groups
 Этот функционал понадобится к следующей лекции. 
 
+Ответ: https://disk.yandex.ru/i/xV-uNvE4orJ3Bw
+
 
 ### Задание 1
 
@@ -34,6 +36,12 @@ https://console.cloud.yandex.ru/folders/<ваш cloud_id>/vpc/security-groups
 - скриншот успешного подключения к консоли ВМ через ssh,
 - ответы на вопросы.
 
+Ответы:
+
+https://disk.yandex.ru/i/3aIgzvky6VzCWg
+https://disk.yandex.ru/i/Qq_s6npazogzww
+Ошибка заключалась в том, что было указано cores = 1 в resorces. Суть ошибки в том, что яндекс облако не поддерживает значение 1 для cores
+preemptible = true означает, что машину можно прервать в любое время для освобождения ресурсов.  core_fraction указывает, какой процент ресурсов процессора можно использовать
 
 ### Задание 2
 
@@ -42,6 +50,8 @@ https://console.cloud.yandex.ru/folders/<ваш cloud_id>/vpc/security-groups
 2. Объявите нужные переменные в файле variables.tf, обязательно указывайте тип переменной. Заполните их **default** прежними значениями из main.tf. 
 3. Проверьте terraform plan (изменений быть не должно). 
 
+Ответы:
+https://disk.yandex.ru/i/17G9xBsz4dDhxQ
 
 ### Задание 3
 
@@ -57,12 +67,35 @@ https://console.cloud.yandex.ru/folders/<ваш cloud_id>/vpc/security-groups
 
 В качестве решения приложите вывод значений ip-адресов команды ```terraform output```
 
+```
+bonanzza@bonanzza:~/Netology/devops-netology/terraform/ter-homeworks/02/src$ terraform refresh
+data.yandex_compute_image.ubuntu: Reading...
+yandex_vpc_network.develop: Refreshing state... [id=enpov60sbjrtlrjnhf38]
+data.yandex_compute_image.ubuntu: Read complete after 1s [id=fd8snjpoq85qqv0mk9gi]
+yandex_vpc_subnet.develop: Refreshing state... [id=e9b6atkkdgqrfj1sqra1]
+yandex_compute_instance.platform: Refreshing state... [id=fhm8h8k98hlk95eqkbos]
+yandex_compute_instance.platform2: Refreshing state... [id=fhm2li2fcap3l5qhk0qe]
+
+Outputs:
+
+netology-develop-platform-db_external_ip = "51.250.12.193"
+netology-develop-platform-web_external_ip = "158.160.49.156"
+bonanzza@bonanzza:~/Netology/devops-netology/terraform/ter-homeworks/02/src$ terraform output
+netology-develop-platform-db_external_ip = "51.250.12.193"
+netology-develop-platform-web_external_ip = "158.160.49.156"
+```
 
 ### Задание 5
 
 1. В файле locals.tf опишите в **одном** local-блоке имя каждой ВМ, используйте интерполяцию по примеру из лекции.
 2. Замените переменные с именами ВМ из файла variables.tf на созданные вами local переменные.
 3. Примените изменения.
+
+Ответы:
+locals {
+vm_web = "${ var.vm_env }-${ var.web_role }"
+vm_db= "${ var.vm_env }-${ var.db_role }"
+}
 
 
 ### Задание 6
@@ -71,6 +104,37 @@ https://console.cloud.yandex.ru/folders/<ваш cloud_id>/vpc/security-groups
 2. Так же поступите с блоком **metadata {serial-port-enable, ssh-keys}**, эта переменная должна быть общая для всех ваших ВМ.
 3. Найдите и удалите все более не используемые переменные проекта.
 4. Проверьте terraform plan (изменений быть не должно).
+
+Ответы:
+
+ariable "vm_web_resources" {
+type = map
+default = {
+cores = 2
+memory = 1
+core_fraction = 5
+}
+}
+
+variable "vm_db_resources" {
+type = map
+default = {
+cores = 2
+memory = 2
+core_fraction = 20
+}
+}
+
+variable "vm_ssh" {
+type = map
+default = {
+serial-port-enable = 1
+ssh-keys = "<my-ssh-key>"
+
+}
+}
+
+https://disk.yandex.ru/i/agSjmDK_Ocwh8g
 
 ------
 
