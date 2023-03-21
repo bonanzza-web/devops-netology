@@ -29,17 +29,17 @@ https://console.cloud.yandex.ru/folders/<ваш cloud_id>/vpc/security-groups
 2. Переименуйте файл personal.auto.tfvars_example в personal.auto.tfvars. Заполните переменные (идентификаторы облака, токен доступа). Благодаря .gitignore этот файл не попадет в публичный репозиторий. **Вы можете выбрать иной способ безопасно передать секретные данные в terraform.**
 3. Сгенерируйте или используйте свой текущий ssh ключ. Запишите его открытую часть в переменную **vms_ssh_root_key**.
 4. Инициализируйте проект, выполните код. Исправьте возникшую ошибку. Ответьте в чем заключается ее суть?
-5. Ответьте, что означает ```preemptible = true``` и ```core_fraction``` в параметрах ВМ? Как это может пригодится в процессе обучения? Ответ в документации Yandex cloud.
+5. Ответьте, что означает ```preemptible = true``` и ```core_fraction``` в параметрах ВМ? Как это может пригодится в процессе обучения? Ответ в документации Yandex cloud.  
 
 В качестве решения приложите:
 - скриншот ЛК Yandex Cloud с созданной ВМ,
 - скриншот успешного подключения к консоли ВМ через ssh,
 - ответы на вопросы.
 
-Ответы:
+Ответы:  ![alt text](https://github.com/bonanzza-web/devops-netology/blob/terraform-02/terraform-02/image/1-0.png)  ![alt text](https://github.com/bonanzza-web/devops-netology/blob/terraform-02/terraform-02/image/1-1.png)
 
-https://disk.yandex.ru/i/3aIgzvky6VzCWg
-https://disk.yandex.ru/i/Qq_s6npazogzww
+
+
 Ошибка заключалась в том, что было указано cores = 1 в resorces. Суть ошибки в том, что яндекс облако не поддерживает значение 1 для cores
 preemptible = true означает, что машину можно прервать в любое время для освобождения ресурсов.  core_fraction указывает, какой процент ресурсов процессора можно использовать
 
@@ -50,8 +50,8 @@ preemptible = true означает, что машину можно прерва
 2. Объявите нужные переменные в файле variables.tf, обязательно указывайте тип переменной. Заполните их **default** прежними значениями из main.tf. 
 3. Проверьте terraform plan (изменений быть не должно). 
 
-Ответы:
-https://disk.yandex.ru/i/17G9xBsz4dDhxQ
+Ответы: ![alt text](https://github.com/bonanzza-web/devops-netology/blob/terraform-02/terraform-02/image/2.png)
+
 
 ### Задание 3
 
@@ -134,7 +134,8 @@ ssh-keys = "<my-ssh-key>"
 }
 }
 
-https://disk.yandex.ru/i/agSjmDK_Ocwh8g
+![alt text](https://github.com/bonanzza-web/devops-netology/blob/terraform-02/terraform-02/image/6.png)  
+
 
 ------
 
