@@ -20,7 +20,7 @@
 https://console.cloud.yandex.ru/folders/<ваш cloud_id>/vpc/security-groups
 Этот функционал понадобится к следующей лекции. 
 
-Ответ: https://disk.yandex.ru/i/xV-uNvE4orJ3Bw
+Ответ:  ![alt text](https://github.com/bonanzza-web/devops-netology/blob/terraform-02/terraform-02/image/0.png)
 
 
 ### Задание 1
