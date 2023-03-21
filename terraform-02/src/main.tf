@@ -8,7 +8,6 @@ resource "yandex_vpc_subnet" "develop" {
   v4_cidr_blocks = var.default_cidr
 }
 
-
 data "yandex_compute_image" "ubuntu" {
   family = var.vm_web_image_name
 }
@@ -33,16 +32,11 @@ resource "yandex_compute_instance" "platform" {
     nat       = true
   }
 
-  # metadata = {
-  #   serial-port-enable = 1
-  #   ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
-  # }
   metadata = {
     serial-port-enable = var.vm_ssh.serial-port-enable
     ssh-keys           = "ubuntu:${var.vm_ssh.ssh-keys}"
   }
 }
-
 
 resource "yandex_compute_instance" "platform2" {
   name        = local.vm_db
@@ -69,10 +63,5 @@ resource "yandex_compute_instance" "platform2" {
     serial-port-enable = var.vm_ssh.serial-port-enable
     ssh-keys           = "ubuntu:${var.vm_ssh.ssh-keys}"
   }
-  # metadata = {
-  #   serial-port-enable = 1
-  #   ssh-keys           = "ubuntu:${var.vms_ssh_root_key}"
-  # } 
-
 }
 

@@ -7,13 +7,6 @@ variable "vm_web_image_name" {
   default     = "ubuntu-2004-lts"
 }
 
-###VM name
-#variable "vm_web_name" {
-#  type        = string
-#  description = "VM name"
-#  default     = "netology-develop-platform-web"
-#}
-
 ###Cores
 variable "vm_web_cores_quantity" {
   type        = number
@@ -35,7 +28,6 @@ variable "vm_web_core_fraction" {
   default     = 5
 }
 
-
 ###For locals
 ###VM env
 variable "vm_env" {
@@ -44,15 +36,12 @@ variable "vm_env" {
   default     = "netology-develop-platform"
 }
 
-
-
 ###WEb role
 variable "web_role" {
   type        = string
   description = "WEB name"
   default     = "web"
 }
-
 
 ###db role
 variable "db_role" {
