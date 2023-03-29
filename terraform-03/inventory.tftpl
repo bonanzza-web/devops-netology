@@ -1,0 +1,6 @@
+[webservers]
+
+%{~ for k,v in webservers ~}
+
+${k} host = ${v}
+%{~ endfor ~}
