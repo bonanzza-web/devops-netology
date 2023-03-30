@@ -1,6 +1,8 @@
 [webservers]
+%{~ for i in webservers1 ~}
+${i["name"]}   ansible_host=${i["network_interface"][0]["nat_ip_address"]} 
+%{~ endfor ~}
 
-%{~ for k,v in webservers ~}
-
-${k} host = ${v}
+%{~ for i in webservers2 ~}
+${i["name"]}   ansible_host=${i["network_interface"][0]["nat_ip_address"]} 
 %{~ endfor ~}
