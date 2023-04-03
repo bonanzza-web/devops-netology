@@ -24,7 +24,7 @@
 3. Добавьте в файл cloud-init.yml установку nginx.
 4. Предоставьте скриншот подключения к консоли и вывод команды ```sudo nginx -t```.
 
-Ответ: 
+Ответ: h![alt text](https://github.com/bonanzza-web/devops-netology/blob/terraform-04/terraform-04/image/04-1.png) 
 
 ------
 
@@ -47,6 +47,11 @@ module "vpc_dev" {
 
 ### Задание 3
 1. Выведите список ресурсов в стейте.
+2. Удалите из стейта модуль vpc.
+3. Импортируйте его обратно. Проверьте terraform plan - изменений быть не должно.
+Приложите список выполненных команд и вывод.  
+
+Ответ:  
 
 ```
 bonanzza@bonanzza:~/Netology/devops-netology/terraform-04$ terraform state list
@@ -141,9 +146,7 @@ Terraform has compared your real infrastructure against your configuration and f
 
 ```
 
-2. Удалите из стейта модуль vpc.
-3. Импортируйте его обратно. Проверьте terraform plan - изменений быть не должно.
-Приложите список выполненных команд и вывод.
+
 
 ## Дополнительные задания (со звездочкой*)
 
