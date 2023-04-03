@@ -24,7 +24,7 @@
 3. Добавьте в файл cloud-init.yml установку nginx.
 4. Предоставьте скриншот подключения к консоли и вывод команды ```sudo nginx -t```.
 
-Ответ: h![alt text](https://github.com/bonanzza-web/devops-netology/blob/terraform-04/terraform-04/image/04-1.png) 
+Ответ: ![alt text](https://github.com/bonanzza-web/devops-netology/blob/terraform-04/terraform-04/image/04-1.png) 
 
 ------
 
