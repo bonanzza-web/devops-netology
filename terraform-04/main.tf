@@ -2,11 +2,14 @@ terraform {
   required_providers {
     yandex = {
       source = "yandex-cloud/yandex"
+      version = ">= 0.89.0"
+    }
+    template = {
+      source = "hashicorp/template"
+      version = ">= 2.2.0"
     }
   }
   required_version = ">=0.13"
-  
-  
   
   backend "s3" {
     endpoint = "storage.yandexcloud.net"
@@ -21,11 +24,6 @@ terraform {
     dynamodb_table = "tflock-develop" 
 }
 }
-
-
-
-  
-
 
 
 provider "yandex" {
@@ -45,7 +43,7 @@ module "vpc" {
 }
 
 module "test-vm" {
-  source          = "git::https://github.com/udjin10/yandex_compute_instance.git?ref=main"
+  source          = "git::https://github.com/udjin10/yandex_compute_instance.git?ref=v1.0.0"
   env_name        = "develop"
   network_id      = module.vpc.vpc_id
   subnet_zones    = ["ru-central1-a"]
