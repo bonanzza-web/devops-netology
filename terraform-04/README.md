@@ -72,20 +72,54 @@ bonanzza@bonanzza:~/Netology/devops-netology/terraform-04$ terraform apply
 Ответ:  
 
 ```
-bonanzza@bonanzza:~/Netology/devops-netology/terraform-04$ terraform apply -lock=false
+bonanzza@bonanzza:~/Netology/devops-netology/terraform-04$ terraform apply
+Acquiring state lock. This may take a few moments...
+╷
+│ Error: Error acquiring the state lock
+│ 
+│ Error message: ConditionalCheckFailedException: Condition not satisfied
+│ Lock Info:
+│   ID:        43544703-5166-d321-36ae-79b7daaa3663
+│   Path:      tfstate-develop-netology/terraform.tfstate
+│   Operation: OperationTypeInvalid
+│   Who:       bonanzza@bonanzza
+│   Version:   1.4.2
+│   Created:   2023-04-18 10:00:48.377440602 +0000 UTC
+│   Info:      
+│ 
+│ 
+│ Terraform acquires a state lock to protect the state from being written
+│ by multiple users at the same time. Please resolve the issue above and try
+│ again. For most commands, you can disable locking with the "-lock=false"
+│ flag, but this is not recommended.
+╵
+bonanzza@bonanzza:~/Netology/devops-netology/terraform-04$ terraform force-unlock 43544703-5166-d321-36ae-79b7daaa3663
+Do you really want to force-unlock?
+  Terraform will remove the lock on the remote state.
+  This will allow local Terraform commands to modify this state, even though it
+  may still be in use. Only 'yes' will be accepted to confirm.
+
+  Enter a value: yes
+
+Terraform state has been successfully unlocked!
+
+The state has been unlocked, and Terraform commands should now be able to
+obtain a new lock on the remote state.
+bonanzza@bonanzza:~/Netology/devops-netology/terraform-04$ terraform apply
 data.template_file.cloudinit: Reading...
 data.template_file.cloudinit: Read complete after 0s [id=03d0ea3077667e8ce600804f885134f024a60e537c2961fb730bee86f0182476]
-module.vpc.yandex_vpc_network.vpc: Refreshing state... [id=enpsjlvkt54e3hvfn8fn]
 module.test-vm.data.yandex_compute_image.my_image: Reading...
+module.vpc.yandex_vpc_network.vpc: Refreshing state... [id=enpbl4q40er55rv0u949]
 module.test-vm.data.yandex_compute_image.my_image: Read complete after 0s [id=fd80f8mhk83hmvp10vh2]
-module.vpc.yandex_vpc_subnet.subnet: Refreshing state... [id=e9b7guc4gm2oc8vm0kem]
-module.test-vm.yandex_compute_instance.vm[0]: Refreshing state... [id=fhmd160spnpg30u1ejv4]
+module.vpc.yandex_vpc_subnet.subnet: Refreshing state... [id=e9b0bovrtkqjr133t918]
+module.test-vm.yandex_compute_instance.vm[0]: Refreshing state... [id=fhmiaoa2bbichdcph0ak]
 
 No changes. Your infrastructure matches the configuration.
 
 Terraform has compared your real infrastructure against your configuration and found no differences, so no changes are needed.
 
 Apply complete! Resources: 0 added, 0 changed, 0 destroyed.
+
 ```
 
 ------
